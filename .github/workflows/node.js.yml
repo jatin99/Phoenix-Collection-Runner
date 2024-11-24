@@ -24,3 +24,11 @@ jobs:
         node-version: '20.x'
     - run: npm install -g newman newman-reporter-htmlextra
     - run: newman run Inwarranty\ flow\ New.postman_collection.json -e QA.postman_environment.json -r cli,htmextra
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        name: Postman Collection HTML Reports
+        path: newman/
+        retention-days: 30
+        
