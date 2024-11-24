@@ -1,0 +1,26 @@
+name: Postman Collection Runner Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+  - cron: 00 18 * * *
+  - cron: 00 6 * * *
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node Js version v22.11.0
+      uses: actions/setup-node@v4
+      with:
+        node-version: v22.11.0
+        cache: 'npm'
+    - run: npm install -g newman newman-reporter-htmlextra
+    - run: newman run Inwarranty\ flow\ New.postman_collection.json -e QA.postman_environment.json -r cli,htmextra
